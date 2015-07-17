@@ -72,6 +72,10 @@ public class ApacheLogParserPlugin
         Pattern accessLogPattern = Pattern.compile("^" + regexp + "$", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
         Matcher accessLogEntryMatcher;
 
+        int replacementSize = replacements.size();
+
+        logger.info("replacement : " + replacementSize);
+
         while( input.nextFile() ){
             while(true){
                 line = lineDecoder.poll();
@@ -82,15 +86,16 @@ public class ApacheLogParserPlugin
 
                 accessLogEntryMatcher = accessLogPattern.matcher(line);
 
+                if(replacementSize != accessLogEntryMatcher.groupCount()){
+                    logger.warn("group count mismatch. + expected : " + replacementSize);
+                }
+
                 while(accessLogEntryMatcher.find()){
-                    for (int i = 0; i < replacements.size(); i++) {
+                    for (int i = 0; i < replacementSize; i++) {
                         LogElement<?> logElement = replacements.get(i).getLogElement();
                         String value = accessLogEntryMatcher.group(i + 1);
-                        if(value == null){
-                            logger.warn("value is null. " + logElement.getName());
-                        }else{
-                            logElement.setToPageBuilder(pageBuilder, i, value);
-                        }
+
+                        logElement.setToPageBuilder(pageBuilder, i, value);
                     }
                 }
 
