@@ -29,7 +29,7 @@ public class LogFormats implements Patterns {
         mapping.put("b", new LongLogElementFactory("response-bytes"));
         mapping.put("B", new LongLogElementFactory("response-bytes"));
         mapping.put("C", new StringLogElementFactory("request-cookie"));
-        mapping.put("D", new LongLogElementFactory("request-time"));
+        mapping.put("D", new LongLogElementFactory("request-process-time-us"));
         mapping.put("e", new StringLogElementFactory("env"));
         mapping.put("f", new StringLogElementFactory("file-name"));
         mapping.put("h", new StringLogElementFactory("remote-host"));
@@ -53,7 +53,7 @@ public class LogFormats implements Patterns {
         mapping.put("t", new TimestampLogElementFactory(task, "request-time"));
         //mapping.put("t", new StringLogElementFactory("request-time"));
 
-        mapping.put("T", new LongLogElementFactory("ele-time"));
+        mapping.put("T", new LongLogElementFactory("request-process-time-s"));
 
         mapping.put("u", new StringLogElementFactory("request-user"));
         mapping.put("U", new StringLogElementFactory("request-path", PATH));
@@ -69,7 +69,7 @@ public class LogFormats implements Patterns {
     private static final Pattern logFormatExtractor =
             Pattern.compile("(%((!)?(\\d{3}(,\\d{3})*))?(<|>)?(\\{([^\\}]+)\\})?([A-z]))",
                     Pattern.DOTALL);
-    //has 9 group
+    //has 9 groups
 
     public String logFormat2Regexp(String logFormat){
 
