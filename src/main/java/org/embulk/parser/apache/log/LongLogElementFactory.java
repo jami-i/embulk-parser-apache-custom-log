@@ -8,6 +8,11 @@ public class LongLogElementFactory implements LogElementFactory<LongLogElement>,
     private String name;
     private String regexp;
 
+    public LongLogElementFactory(String name, String regexp) {
+        this.name = name;
+        this.regexp = regexp;
+    }
+
     public LongLogElementFactory(String name) {
         this.name = name;
         this.regexp = LONG;

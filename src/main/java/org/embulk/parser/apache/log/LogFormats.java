@@ -36,7 +36,7 @@ public class LogFormats implements Patterns {
         mapping.put("H", new StringLogElementFactory("request-protocol"));
         mapping.put("i", new StringLogElementFactory("request-header"));
         mapping.put("l", new StringLogElementFactory("remote-log-name"));
-        mapping.put("m", new StringLogElementFactory("request-method"));
+        mapping.put("m", new StringLogElementFactory("request-method", METHOD));
 
         mapping.put("n", new StringLogElementFactory("module-note"));
         mapping.put("o", new StringLogElementFactory("response-header"));
@@ -45,10 +45,10 @@ public class LogFormats implements Patterns {
 
         mapping.put("P", new LongLogElementFactory("request-process"));
 
-        mapping.put("q", new StringLogElementFactory("request-query"));
+        mapping.put("q", new StringLogElementFactory("request-query", QUERY));
 
         mapping.put("r", new StringLogElementFactory("request-line"));
-        mapping.put("s", new LongLogElementFactory("response-status"));
+        mapping.put("s", new LongLogElementFactory("response-status", STATUS));
 
         mapping.put("t", new TimestampLogElementFactory(task, "request-time"));
         //mapping.put("t", new StringLogElementFactory("request-time"));
@@ -56,10 +56,10 @@ public class LogFormats implements Patterns {
         mapping.put("T", new LongLogElementFactory("ele-time"));
 
         mapping.put("u", new StringLogElementFactory("request-user"));
-        mapping.put("U", new StringLogElementFactory("request-path"));
+        mapping.put("U", new StringLogElementFactory("request-path", PATH));
         mapping.put("v", new StringLogElementFactory("request-server-name"));
         mapping.put("V", new StringLogElementFactory("canonical-server-name"));
-        mapping.put("X", new StringLogElementFactory("connection-status"));
+        mapping.put("X", new StringLogElementFactory("connection-status", CONN_STATUS));
         mapping.put("I", new LongLogElementFactory("request-total-bytes"));
         mapping.put("O", new LongLogElementFactory("response-total-bytes"));
 

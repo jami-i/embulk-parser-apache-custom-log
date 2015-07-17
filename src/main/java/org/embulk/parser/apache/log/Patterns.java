@@ -8,4 +8,14 @@ public interface Patterns {
 
     String ANY = "(.*)";
 
+    String PATH = "(/[^\\?]+)";
+
+    String QUERY = "(\\?.*)?";
+
+    String STATUS = "([1-9]\\d{2})";
+
+    String METHOD = "(GET|POST|PUT|DELETE|HEAD|OPTIONS|TRACE|CONNECT)";
+
+    String CONN_STATUS = "([X+\\-])";
+
 }
