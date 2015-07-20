@@ -62,13 +62,38 @@ public class LogFormats implements Patterns {
         mapping.put("I", new LongLogElementFactory("request-total-bytes"));
         mapping.put("O", new LongLogElementFactory("response-total-bytes"));
 
+        mapping.put("%", new StringLogElementFactory("%", "¥¥%"));
+
         return mapping;
     }
 
+    /**
+     * RegExp pattern of extract log format key
+     *
+     * this pattern has 9 groups, which are described as below.
+     *
+     * (%((!)?(\d{3}(,\d{3})*))?(<|>)?(\{([^\}]+)\})?([A-z]))
+     * | ||   |     |           |     |  |           |- group(9) key
+     * | ||   |     |           |     |  |------------- group(8) optional parameter
+     * | ||   |     |           |     |---------------- group(7) optional parameter wrapper group
+     * | ||   |     |           |---------------------- group(6) logging timing parameter
+     * | ||   |     |---------------------------------- group(5) additional http status(es)
+     * | ||   |---------------------------------------- group(4) http status(es)
+     * | ||-------------------------------------------- group(3) inverse http status specifier
+     * | |--------------------------------------------- group(2) http status specifier
+     * |----------------------------------------------- group(0), group(1)
+     *
+     */
     private static final Pattern logFormatExtractor =
             Pattern.compile("(%((!)?(\\d{3}(,\\d{3})*))?(<|>)?(\\{([^\\}]+)\\})?([A-z]))",
                     Pattern.DOTALL);
 
+    /**
+     * Convert logFormat String to Regexp String
+     * @param logFormat apache custom log format
+     * @return The pattern that matches CustomLog Configuration.
+     *
+     */
     public String logFormat2RegexpString(String logFormat){
         List<Replacement> replacements = getReplacements(logFormat);
         return replace(logFormat, replacements);
