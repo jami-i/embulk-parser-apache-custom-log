@@ -7,7 +7,7 @@ import org.embulk.spi.type.Types;
 public class LongLogElement extends LogElement<Long> {
 
     public LongLogElement(String name, String regex) {
-        super(name, regex, Types.LONG, Long.class);
+        super(name, regex, Types.LONG);
     }
 
     @Override

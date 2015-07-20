@@ -20,7 +20,7 @@ public class LogFormats implements Patterns {
         this.task = task;
     }
 
-    public Map<String, LogElementFactory<? extends LogElement>> get(){
+    public Map<String, LogElementFactory<? extends LogElement>> getLogElementMappings(){
 
         Map<String, LogElementFactory<? extends LogElement>> mapping = new HashMap<>();
 
@@ -51,7 +51,6 @@ public class LogFormats implements Patterns {
         mapping.put("s", new LongLogElementFactory("response-status", STATUS));
 
         mapping.put("t", new TimestampLogElementFactory(task, "request-time"));
-        //mapping.put("t", new StringLogElementFactory("request-time"));
 
         mapping.put("T", new LongLogElementFactory("request-process-time-s"));
 
@@ -69,26 +68,23 @@ public class LogFormats implements Patterns {
     private static final Pattern logFormatExtractor =
             Pattern.compile("(%((!)?(\\d{3}(,\\d{3})*))?(<|>)?(\\{([^\\}]+)\\})?([A-z]))",
                     Pattern.DOTALL);
-    //has 9 groups
 
-    public String logFormat2Regexp(String logFormat){
-
+    public String logFormat2RegexpString(String logFormat){
         List<Replacement> replacements = getReplacements(logFormat);
-
         return replace(logFormat, replacements);
-
     }
 
     private String replace(String logFormat, List<Replacement> replacements) {
         int offset = 0;
 
         for (Replacement replacement : replacements) {
-            String left = logFormat.substring(0, offset + replacement.start);
-            String right = logFormat.substring(offset + replacement.end, logFormat.length());
+            String left  = logFormat.substring(0, offset + replacement.getStart());
+            String right = logFormat.substring(offset + replacement.getEnd(), logFormat.length());
             int originalLength = logFormat.length() - left.length() - right.length();
 
-            logFormat = left + replacement.logElement.getRegexp() + right;
-            offset += replacement.logElement.getRegexp().length() - originalLength;
+            String regexp = replacement.getLogElement().getRegexp();
+            logFormat = left + regexp + right;
+            offset += regexp.length() - originalLength;
         }
         return logFormat;
     }
@@ -110,7 +106,7 @@ public class LogFormats implements Patterns {
             String parameter = matcher.group(8);
             String key = empty(matcher.group(9));
 
-            LogElementFactory<? extends LogElement> factory = get().get(key);
+            LogElementFactory<? extends LogElement> factory = getLogElementMappings().get(key);
 
             if(factory != null){
                 int start = matcher.start();
@@ -125,24 +121,9 @@ public class LogFormats implements Patterns {
         return replacements;
     }
 
-    public String empty(String s){
+    private String empty(String s){
         return s == null ? "" : s;
     }
 
-    public static class Replacement{
-        public final int start;
-        public final int end;
-        private final LogElement<?> logElement;
-
-        public Replacement(int start, int end, LogElement<?> logElement) {
-            this.logElement = logElement;
-            this.end = end;
-            this.start = start;
-        }
-
-        public LogElement<?> getLogElement() {
-            return logElement;
-        }
-    }
 
 }

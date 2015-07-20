@@ -3,7 +3,6 @@ package org.embulk.parser.apache.log;
 
 import org.embulk.spi.ColumnConfig;
 import org.embulk.spi.PageBuilder;
-import org.embulk.spi.type.StringType;
 import org.embulk.spi.type.Type;
 
 public abstract class LogElement<T> {
@@ -12,8 +11,7 @@ public abstract class LogElement<T> {
     protected String regexp;
     protected final Type outputType;
 
-    public LogElement(String name, String regex, Type outputType, Class<T> javaType) {
-
+    public LogElement(String name, String regex, Type outputType){
         this.name = name;
         this.regexp = regex;
         this.outputType = outputType;

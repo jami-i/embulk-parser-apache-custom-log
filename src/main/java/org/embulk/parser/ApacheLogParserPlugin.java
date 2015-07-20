@@ -64,7 +64,7 @@ public class ApacheLogParserPlugin
 
         List<LogFormats.Replacement> replacements = logFormats.getReplacements(format);
 
-        String regexp = logFormats.logFormat2Regexp(format);
+        String regexp = logFormats.logFormat2RegexpString(format);
 
         logger.info("LogFormat : " + format);
         logger.info("RegExp    : " + regexp);

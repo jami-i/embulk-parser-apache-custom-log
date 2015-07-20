@@ -17,7 +17,7 @@ public class TimestampLogElement extends LogElement<Timestamp> {
     }
 
     public TimestampLogElement(TimestampParser.ParserTask task, String name, String regex, String pattern) {
-        super(name, regex, TIMESTAMP, Timestamp.class);
+        super(name, regex, TIMESTAMP);
         this.parser = new TimestampParser(pattern, task);
     }
 

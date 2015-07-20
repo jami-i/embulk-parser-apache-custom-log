@@ -7,7 +7,7 @@ import org.embulk.spi.type.Types;
 public class StringLogElement extends LogElement<String> {
 
     public StringLogElement(String name, String regex) {
-        super(name, regex, Types.STRING, String.class);
+        super(name, regex, Types.STRING);
     }
 
     @Override
