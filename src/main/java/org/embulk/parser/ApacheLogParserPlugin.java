@@ -7,6 +7,7 @@ import org.embulk.config.Task;
 import org.embulk.config.TaskSource;
 import org.embulk.parser.apache.log.LogElement;
 import org.embulk.parser.apache.log.LogFormats;
+import org.embulk.parser.apache.log.Replacement;
 import org.embulk.spi.*;
 import org.embulk.spi.time.TimestampParser;
 import org.embulk.spi.util.LineDecoder;
@@ -40,9 +41,9 @@ public class ApacheLogParserPlugin
         ArrayList<ColumnConfig> columns = Lists.newArrayList();
         final String format = task.getFormat();
 
-        List<LogFormats.Replacement> replacements = new LogFormats(task).getReplacements(format);
+        List<Replacement> replacements = new LogFormats(task).getReplacements(format);
 
-        for (LogFormats.Replacement replacement : replacements) {
+        for (Replacement replacement : replacements) {
             LogElement<?> logElement = replacement.getLogElement();
             columns.add(logElement.getColumnConfig());
         }
@@ -62,7 +63,7 @@ public class ApacheLogParserPlugin
         final String format = task.getFormat();
         LogFormats logFormats = new LogFormats(task);
 
-        List<LogFormats.Replacement> replacements = logFormats.getReplacements(format);
+        List<Replacement> replacements = logFormats.getReplacements(format);
 
         String regexp = logFormats.logFormat2RegexpString(format);
 
