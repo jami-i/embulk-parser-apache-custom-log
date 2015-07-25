@@ -5,10 +5,10 @@ import org.embulk.spi.time.TimestampParser;
 
 public class TimestampLogElementFactory implements LogElementFactory<TimestampLogElement>, Patterns {
 
-    private TimestampParser.ParserTask task;
+    private TimestampParser.Task task;
     private String name;
 
-    public TimestampLogElementFactory(TimestampParser.ParserTask task, String name) {
+    public TimestampLogElementFactory(TimestampParser.Task task, String name) {
         this.task = task;
         this.name = name;
     }

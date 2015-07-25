@@ -1,6 +1,7 @@
 package org.embulk.parser.apache.log;
 
 
+import org.embulk.config.ConfigSource;
 import org.embulk.spi.ColumnConfig;
 import org.embulk.spi.PageBuilder;
 import org.embulk.spi.type.Type;
@@ -33,8 +34,8 @@ public abstract class LogElement<T> {
 
     public abstract void setToPageBuilder(PageBuilder pageBuilder, int i, String value);
 
-    public ColumnConfig getColumnConfig(){
-        return new ColumnConfig(name, outputType, null);
+    public ColumnConfig getColumnConfig(ConfigSource config){
+        return new ColumnConfig(name, outputType, config);
     }
 
 }

@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 
 public class LogFormats implements Patterns {
 
-    TimestampParser.ParserTask task;
+    TimestampParser.Task task;
 
     public LogFormats() {
         this.task = null;
     }
 
-    public LogFormats(TimestampParser.ParserTask task) {
+    public LogFormats(TimestampParser.Task task) {
         this.task = task;
     }
 

@@ -26,7 +26,7 @@ public class ApacheLogParserPlugin
     private static final Logger logger = LoggerFactory.getLogger(ApacheLogParserPlugin.class);
 
     public interface PluginTask
-            extends Task, LineDecoder.DecoderTask, TimestampParser.ParserTask
+            extends Task, LineDecoder.DecoderTask, TimestampParser.Task
     {
 
         @Config("format")
@@ -45,7 +45,7 @@ public class ApacheLogParserPlugin
 
         for (Replacement replacement : replacements) {
             LogElement<?> logElement = replacement.getLogElement();
-            columns.add(logElement.getColumnConfig());
+            columns.add(logElement.getColumnConfig(config));
         }
 
         Schema schema = new SchemaConfig(columns).toSchema();

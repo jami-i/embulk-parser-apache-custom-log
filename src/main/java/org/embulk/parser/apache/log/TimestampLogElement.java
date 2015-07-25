@@ -12,13 +12,13 @@ public class TimestampLogElement extends LogElement<Timestamp> {
 
     private final TimestampParser parser;
 
-    public TimestampLogElement(TimestampParser.ParserTask task, String name, String regex) {
+    public TimestampLogElement(TimestampParser.Task task, String name, String regex) {
         this(task, name, regex, "%d/%b/%Y:%T %z");
     }
 
-    public TimestampLogElement(TimestampParser.ParserTask task, String name, String regex, String pattern) {
+    public TimestampLogElement(TimestampParser.Task task, String name, String regex, String pattern) {
         super(name, regex, TIMESTAMP);
-        this.parser = new TimestampParser(pattern, task);
+        this.parser = new TimestampParser(task.getJRuby(), pattern, task.getDefaultTimeZone());
     }
 
     @Override
