@@ -1,0 +1,13 @@
+in:
+  type: file
+  path_prefix: 'data/access_log_2_combined'
+  parser:
+    type: apache-log
+    format: '%h %l %u %t \"%m %U%q %H\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"'
+out:
+  type: file
+  path_prefix: '/temp/result_2_combined.'
+  file_ext: tsv
+  formatter:
+    type: csv
+    delimiter: "\t"

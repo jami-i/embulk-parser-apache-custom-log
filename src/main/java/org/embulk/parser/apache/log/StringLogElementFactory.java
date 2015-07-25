@@ -9,7 +9,6 @@ public class StringLogElementFactory implements LogElementFactory<StringLogEleme
     private String regexp;
 
     public StringLogElementFactory(String name, String regexp) {
-
         this.name = name;
         this.regexp = regexp;
     }

@@ -1,0 +1,13 @@
+in:
+  type: file
+  path_prefix: 'data/access_log_common'
+  parser:
+    type: apache-log
+    format: '%h %l %u %t \"%r\" %>s %b'
+out:
+  type: file
+  path_prefix: '/temp/result_common.'
+  file_ext: tsv
+  formatter:
+    type: csv
+    delimiter: "\t"

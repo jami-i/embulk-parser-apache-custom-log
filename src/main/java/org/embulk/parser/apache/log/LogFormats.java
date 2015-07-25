@@ -12,10 +12,6 @@ public class LogFormats implements Patterns {
 
     TimestampParser.Task task;
 
-    public LogFormats() {
-        this.task = null;
-    }
-
     public LogFormats(TimestampParser.Task task) {
         this.task = task;
     }
@@ -62,7 +58,7 @@ public class LogFormats implements Patterns {
         mapping.put("I", new LongLogElementFactory("request-total-bytes"));
         mapping.put("O", new LongLogElementFactory("response-total-bytes"));
 
-        mapping.put("%", new StringLogElementFactory("%", "¥¥%"));
+        mapping.put("%", new StringLogElementFactory("%", "(¥¥%)"));
 
         return mapping;
     }
@@ -84,7 +80,7 @@ public class LogFormats implements Patterns {
      * |----------------------------------------------- group(0), group(1)
      *
      */
-    private static final Pattern logFormatExtractor =
+    public static final Pattern logFormatExtractor =
             Pattern.compile("(%((!)?(\\d{3}(,\\d{3})*))?(<|>)?(\\{([^\\}]+)\\})?([A-z]))",
                     Pattern.DOTALL);
 
@@ -124,6 +120,8 @@ public class LogFormats implements Patterns {
                 throw new IllegalArgumentException("invalid regexp pattern");
             }
             String all = empty(matcher.group(1));
+
+            //TODO implement
             //String ignoreStatus = empty(matcher.group(3));
             //Object[] statuses = Arrays.stream(empty(matcher.group(4)).split(",")).toArray();
             //String position = empty(matcher.group(6));
