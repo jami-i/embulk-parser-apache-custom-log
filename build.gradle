@@ -53,12 +53,12 @@ task gemspec {
 Gem::Specification.new do |spec|
   spec.name          = "${project.name}"
   spec.version       = "${project.version}"
-  spec.authors       = ["Hiroyuki Sato"]
-  spec.summary       = %[Apache Log parser plugin for Embulk]
-  spec.description   = %[Parses Apache Log files read by other file input plugins.]
-  spec.email         = ["hiroysato@gmail.com"]
+  spec.authors       = ["Hiroyuki Sato", "Osamu Ishikawa"]
+  spec.summary       = %[Apache Custom Log parser plugin for Embulk]
+  spec.description   = %[Parses Apache Custom Log files read by other file input plugins.]
+  spec.email         = ["hiroysato@gmail.com", "bass.duo@gmail.com"]
   spec.licenses      = ["MIT"]
-  spec.homepage      = "https://github.com/hiroyuki-sato/embulk-parser-apache-log"
+  spec.homepage      = "https://github.com/jami-i/embulk-parser-apache-custom-log"
 
   spec.files         = `git ls-files`.split("\n") + Dir["classpath/*.jar"]
   spec.test_files    = spec.files.grep(%r"^(test|spec)/")
