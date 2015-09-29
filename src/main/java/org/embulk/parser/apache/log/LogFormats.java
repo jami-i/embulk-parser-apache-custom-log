@@ -29,9 +29,9 @@ public class LogFormats implements Patterns {
         mapping.put("e", new StringLogElementFactory("env"));
         mapping.put("f", new StringLogElementFactory("file-name"));
         mapping.put("h", new StringLogElementFactory("remote-host"));
-        mapping.put("H", new StringLogElementFactory("request-protocol"));
+        mapping.put("H", new StringLogElementFactory("request-protocol", NON_SPACE));
         mapping.put("i", new StringLogElementFactory("request-header"));
-        mapping.put("l", new StringLogElementFactory("remote-log-name"));
+        mapping.put("l", new StringLogElementFactory("remote-log-name", NON_SPACE));
         mapping.put("m", new StringLogElementFactory("request-method", METHOD));
 
         mapping.put("n", new StringLogElementFactory("module-note"));
@@ -52,8 +52,8 @@ public class LogFormats implements Patterns {
 
         mapping.put("u", new StringLogElementFactory("request-user"));
         mapping.put("U", new StringLogElementFactory("request-path", PATH));
-        mapping.put("v", new StringLogElementFactory("request-server-name"));
-        mapping.put("V", new StringLogElementFactory("canonical-server-name"));
+        mapping.put("v", new StringLogElementFactory("request-server-name", NON_SPACE));
+        mapping.put("V", new StringLogElementFactory("canonical-server-name", NON_SPACE));
         mapping.put("X", new StringLogElementFactory("connection-status", CONN_STATUS));
         mapping.put("I", new LongLogElementFactory("request-total-bytes"));
         mapping.put("O", new LongLogElementFactory("response-total-bytes"));

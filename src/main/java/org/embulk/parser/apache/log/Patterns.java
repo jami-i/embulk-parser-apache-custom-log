@@ -2,13 +2,15 @@ package org.embulk.parser.apache.log;
 
 public interface Patterns {
 
+    String NON_SPACE = "([^\\s]*)";
+
     String IP_ADDRESS = "(\\d+(?:\\.\\d+){3})";
 
     String LONG = "(-?\\d+|-)";
 
     String ANY = "(.*)";
 
-    String PATH = "(/[^\\?]+)";
+    String PATH = "(/[^\\?]*)";
 
     String QUERY = "(\\?.*)?";
 
