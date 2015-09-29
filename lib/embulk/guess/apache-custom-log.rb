@@ -8,7 +8,7 @@ module Embulk
     #      one of binary guess (GuessPlugin), text guess (TextGuessPlugin),
     #      or line guess (LineGuessPlugin).
 
-    #class ApacheLogParserGuessPlugin < GuessPlugin
+    #class ApacheCustomLogParserGuessPlugin < GuessPlugin
     #  Plugin.register_guess("apache-log", self)
     #
     #  def guess(config, sample_buffer)

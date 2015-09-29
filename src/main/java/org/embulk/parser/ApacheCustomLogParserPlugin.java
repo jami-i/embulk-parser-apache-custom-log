@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ApacheLogParserPlugin
+public class ApacheCustomLogParserPlugin
         implements ParserPlugin
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApacheLogParserPlugin.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApacheCustomLogParserPlugin.class);
 
     public interface PluginTask
             extends Task, LineDecoder.DecoderTask, TimestampParser.Task
