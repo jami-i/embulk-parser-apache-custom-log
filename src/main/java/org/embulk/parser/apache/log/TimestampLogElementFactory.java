@@ -1,5 +1,8 @@
 package org.embulk.parser.apache.log;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import org.apache.commons.lang3.StringUtils;
 import org.embulk.spi.time.TimestampParser;
 
@@ -18,7 +21,30 @@ public class TimestampLogElementFactory implements LogElementFactory<TimestampLo
         if(StringUtils.isEmpty(parameter)){
             return new TimestampLogElement(task, name, "\\[([^\\]]+)\\]");
         }else{
-            return new TimestampLogElement(task, name, parameter);
+            String regex = toTimestampRegex(parameter);
+            return new TimestampLogElement(task, name, regex, parameter);
         }
+    }
+
+    private String toTimestampRegex(String parameter) {
+        String regex = "(" + parameter + ")";
+        regex = regex.replaceAll("\\[|\\]","\\\\$0");
+
+        regex = regex.replaceAll("%[abhpABPZ]","[A-z]+");
+        regex = regex.replaceAll("%c","[A-z]{3} [A-z]{3} \\\\d{2} \\\\d{2}:\\\\d{2}:\\\\d{2} \\\\d{4}");
+        regex = regex.replaceAll("%[dgmyCHIMSUVW]","\\\\d{2}");
+        regex = regex.replaceAll("%[Dx]","\\\\d{2}/\\\\d{2}/\\\\d{2}");
+        regex = regex.replaceAll("%[ekl]","[1-9 ]\\\\d");
+        regex = regex.replaceAll("%F","\\\\d{4}-\\\\d{2}-\\\\d{2}");
+        regex = regex.replaceAll("%[GY]","\\\\d{4}");
+        regex = regex.replaceAll("%j","\\\\d{3}");
+        regex = regex.replaceAll("%r","\\\\d{2}:\\\\d{2}:\\\\d{2} [A-z]+");
+        regex = regex.replaceAll("%R","\\\\d{2}:\\\\d{2}");
+        regex = regex.replaceAll("%s","\\\\d+");
+        regex = regex.replaceAll("%[TX]","\\\\d{2}:\\\\d{2}:\\\\d{2}");
+        regex = regex.replaceAll("%[uw]","\\\\d");
+        regex = regex.replaceAll("%z","\\\\+\\\\d{4}");
+
+        return regex;
     }
 }
