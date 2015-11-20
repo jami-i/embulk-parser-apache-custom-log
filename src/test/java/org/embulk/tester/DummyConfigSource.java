@@ -30,6 +30,11 @@ public class DummyConfigSource implements ConfigSource {
     }
 
     @Override
+    public boolean has(String attrName) {
+        return false;
+    }
+
+    @Override
     public <E> E get(Class<E> type, String attrName) {
         return null;
     }

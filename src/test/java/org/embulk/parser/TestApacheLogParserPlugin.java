@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 public class TestApacheLogParserPlugin {
 
-    private static EmbulkPluginTester tester = new EmbulkPluginTester(ParserPlugin.class, "apache-log", ApacheLogParserPlugin.class);
+    private static EmbulkPluginTester tester = new EmbulkPluginTester(ParserPlugin.class, "apache-log", ApacheCustomLogParserPlugin.class);
 
     @Test
     public void test_common() throws Exception {
@@ -42,6 +43,40 @@ public class TestApacheLogParserPlugin {
                             "",
                             "frank",
                             "2000-10-10 20:55:36.000000 +0000",
+                            "GET /apache_pb.gif HTTP/1.0",
+                            "200",
+                            "2326"
+                    };
+                    assertThat(cols, is(expected));
+                }
+        );
+
+    }
+
+    @Test
+    public void test_custom_time_format() throws Exception {
+        tester.run("/yml/test_custom_time_format.yml");
+
+        assertResult(
+                "/temp/result_custom_time_format.000.00.tsv",
+                cols -> {
+                    String[] expected = new String[]{
+                            "remote-host",
+                            "remote-log-name",
+                            "request-user",
+                            "request-time",
+                            "request-line",
+                            "response-status",
+                            "response-bytes"
+                    };
+                    assertThat(cols, is(expected));
+                },
+                cols -> {
+                    String[] expected = new String[]{
+                            "127.0.0.1",
+                            "",
+                            "frank",
+                            "2015-11-20 13:55:36.000000 +0000",
                             "GET /apache_pb.gif HTTP/1.0",
                             "200",
                             "2326"
