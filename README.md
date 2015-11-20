@@ -1,5 +1,7 @@
 # Apache **CustomLog**  parser plugin for Embulk
 
+![circlci-badge](https://circleci.com/gh/jami-i/embulk-parser-apache-custom-log.svg?&style=shield&circle-token=7092d38cbe35149872178bbce455dfc9d5bc951b)
+
 Embulk parser plugin for apache **CustomLog**.
 
 Parser configuration based  [Apache HTTPD 2.2 CustomLogFormat](http://httpd.apache.org/docs/2.2/en/mod/mod_log_config.html#formats)
@@ -64,7 +66,7 @@ see: [LogFormats.java](https://github.com/jami-i/embulk-parser-apache-custom-log
 | q  | String    | request-query           |          |
 | r  | String    | request-line            |          |
 | s  | Long      | response-status         |          |
-| t  | Timestamp | request-time            | timestamp format defined in [strptime](http://docs.ruby-lang.org/en/2.0.0/DateTime.html#method-c-_strptime)|
+| t  | Timestamp | request-time            | timestamp format defined in [strptime](http://docs.ruby-lang.org/en/2.0.0/DateTime.html#method-c-_strptime). <br/>if format is not present, DateTimeFormatter class will be used. |
 | T  | Long      | request-process-time-s  |          |
 | u  | String    | request-user            |          |
 | U  | String    | request-path            |          |
