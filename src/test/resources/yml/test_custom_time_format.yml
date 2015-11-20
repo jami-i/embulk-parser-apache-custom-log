@@ -1,0 +1,13 @@
+in:
+  type: file
+  path_prefix: 'data/access_log_custom_time_format'
+  parser:
+    type: apache-log
+    format: '%h %l %u %{[%Y.%m.%d %T]}t \"%r\" %>s %b'
+out:
+  type: file
+  path_prefix: '/temp/result_custom_time_format.'
+  file_ext: tsv
+  formatter:
+    type: csv
+    delimiter: "\t"

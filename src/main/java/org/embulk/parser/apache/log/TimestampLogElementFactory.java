@@ -1,12 +1,14 @@
 package org.embulk.parser.apache.log;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import org.apache.commons.lang3.StringUtils;
 import org.embulk.spi.time.TimestampParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TimestampLogElementFactory implements LogElementFactory<TimestampLogElement>, Patterns {
+
+    private static final Logger logger = LoggerFactory.getLogger(TimestampLogElementFactory.class);
 
     private TimestampParser.Task task;
     private String name;
@@ -19,7 +21,8 @@ public class TimestampLogElementFactory implements LogElementFactory<TimestampLo
     @Override
     public TimestampLogElement create(String parameter) {
         if(StringUtils.isEmpty(parameter)){
-            return new TimestampLogElement(task, name, "\\[([^\\]]+)\\]");
+            logger.info("since format parameter is not given, use DateTimeFormatter.");
+            return new SimpleDateFormatTimestampLogElement(task, name);
         }else{
             String regex = toTimestampRegex(parameter);
             return new TimestampLogElement(task, name, regex, parameter);

@@ -8,7 +8,8 @@ import java.io.FileWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.embulk.command.Runner;
+import org.embulk.EmbulkEmbed;
+import org.embulk.config.ConfigLoader;
 
 public class EmbulkPluginTester {
 
@@ -19,8 +20,14 @@ public class EmbulkPluginTester {
 
 	public void run(String ymlPath) throws Exception
 	{
-		Runner runner = new Runner("{}");
-		runner.run(convert(ymlPath));
+		EmbulkEmbed.Bootstrap bootstrap = new EmbulkEmbed.Bootstrap();
+
+		EmbulkEmbed embulk = bootstrap.initialize();
+
+		ConfigLoader configLoader = new ConfigLoader(embulk.getModelManager());
+		embulk.run(configLoader.fromYamlFile(new File(convert(ymlPath))));
+
+
 	}
 
 	private String convert(String yml) throws Exception
