@@ -1,5 +1,8 @@
 package org.embulk.parser.apache.log;
 
+import org.embulk.config.ConfigSource;
+import org.embulk.config.Task;
+import org.embulk.spi.Exec;
 import org.embulk.spi.PageBuilder;
 import org.embulk.spi.time.Timestamp;
 import org.embulk.spi.time.TimestampParser;
@@ -16,9 +19,19 @@ public class TimestampLogElement extends LogElement<Timestamp> {
         this(task, name, regex, "%d/%b/%Y:%T %z");
     }
 
+    private static interface ParserIntlTask extends Task, TimestampParser.Task {}
+    private static interface ParserIntlColumnOption extends Task, TimestampParser.TimestampColumnOption {}
+
     public TimestampLogElement(TimestampParser.Task task, String name, String regex, String pattern) {
         super(name, regex, TIMESTAMP);
-        this.parser = new TimestampParser(task.getJRuby(), pattern, task.getDefaultTimeZone());
+        // TODO: Switch to a newer TimestampParser constructor after a reasonable interval.
+        // Traditional constructor is used here for compatibility.
+        final ConfigSource configSource = Exec.newConfigSource();
+        configSource.set("format", pattern);
+        configSource.set("timezone", task.getDefaultTimeZone());
+        this.parser = new TimestampParser(
+            Exec.newConfigSource().loadConfig(ParserIntlTask.class),
+            configSource.loadConfig(ParserIntlColumnOption.class));
     }
 
     @Override
