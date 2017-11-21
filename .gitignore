@@ -8,3 +8,4 @@ build/
 .idea
 /*.gem
 /*.iml
+/out/
