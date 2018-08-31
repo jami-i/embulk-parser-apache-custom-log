@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      GRADLE_USER_HOME: ~/repo/.gradle
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          key: jar-{{ checksum "build.gradle" }}
+      - run:
+          command: ./gradlew -s package
+      - save_cache:
+          key: jar-{{ checksum "build.gradle" }}
+          paths:
+            - .gradle
