@@ -12,7 +12,7 @@ jobs:
       - restore_cache:
           key: jar-{{ checksum "build.gradle" }}
       - run:
-          command: ./gradlew -s package
+          command: ./gradlew -s test package
       - run:
           name: Save test results
           command: |
